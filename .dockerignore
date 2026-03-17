@@ -1,0 +1,7 @@
+villageenv/
+.venv/
+__pycache__/
+*.pyc
+.env
+*.log
+.git/
