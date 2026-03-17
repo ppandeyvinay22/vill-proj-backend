@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: villagefood-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: .
+    container_name: villagefood-api
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017
+      - DATABASE_NAME=village_food
+      - SECRET_KEY=change_this_to_a_random_64_char_string
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ../vill-proj-frontend
+    container_name: villagefood-web
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
